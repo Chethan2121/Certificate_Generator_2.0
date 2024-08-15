@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    <link rel="icon" type="image/x-icon" href="img_favicon.jpg">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .certificate-container {
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            width: 900px;
+            text-align: center;
+            position: relative;
+        }
+        .certificate-decor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('z.jpg') no-repeat center;
+            background-size: cover;
+            opacity: 0.05;
+            z-index: -1;
+        }
+        .certificate-header {
+            font-size: 55px;
+            margin-bottom: 20px;
+            font-family: 'Great Vibes', cursive;
+            letter-spacing: 2px;
+        }
+        .certificate-subheader {
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        .certificate-body {
+            font-size: 20px;
+        }
+        .certificate-body p {
+            margin: 10px 0;
+        }
+        .certificate-body .name {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .certificate-body .event {
+            font-size: 26px;
+        }
+        .certificate-body .date {
+            font-size: 22px;
+        }
+        .signature {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .signature div {
+            width: 200px;
+            border-top: 2px solid #000;
+            text-align: center;
+            padding-top: 10px;
+            font-size: 18px;
+        }
+        .ribbon {
+            width: 160px;
+            height: 160px;
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            background-color: #76d8fc;
+            color: rgb(73, 76, 77);
+            text-align: center;
+            line-height: 160px;
+            font-size: 22px;
+            transform: rotate(45deg);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .download-btn {
+            margin-top: 20px;
+            padding: 8px 16px;
+            font-size: 16px;
+            color: white;
+            background-color: #3d98ff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .download-btn:hover {
+            background-color: #0051ff;
+        }
+        .emblem {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            background: url('emblem.png') no-repeat center;
+            background-size: contain;
+        }
+        /* Sunset Glow Theme */
+        
+    </style>
+</head>
+<body>
+    <div class="certificate-container" id="certificate">
+        <div class="certificate-decor"></div>
+        <div class="emblem"></div>
+        <div class="ribbon">Award</div>
+        <div class="certificate-header">Certificate of Completion</div>
+        <div class="certificate-subheader">This is to certify that</div>
+        <div class="certificate-body">
+            <p class="name" id="name"></p>
+            <p>has successfully participated and has achieved the honour in the event of </p>
+            <p class="event" id="event"></p>
+            <div class="certificate-body"><p>and has excelled in the active 
+                participation and completion of the event with insightful knowledge </p></div>
+            <p>on <span class="date" id="date"></span></p>
+        </div>
+        <div class="signature">
+            <div>
+                <p>Information Science Department of VVCE</p>
+                <p>Event Organizer</p>
+            </div>
+            <div>
+                <p>Vidyavardhaka college of Engineering</p>
+                <p>Certificate Authority</p>
+            </div>
+        </div>
+    </div>
+    <button class="download-btn" id="downloadBtn">Download Certificate</button>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        function applyTheme(theme) {
+            const certificateContainer = document.getElementById('certificate');
+            certificateContainer.classList.remove('sunset-glow', 'ocean-breeze', 'forest-whisper', 'royal-elegance', 'light-theme');
+            certificateContainer.classList.add(theme);
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        document.getElementById('name').innerText = name;
+        document.getElementById('event').innerText = urlParams.get('event');
+        document.getElementById('date').innerText = new Date(urlParams.get('date')).toLocaleDateString();
+
+        const theme = urlParams.get('theme');
+        applyTheme(theme);
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            html2canvas(document.getElementById('certificate')).then(canvas => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/jpeg');
+                link.download = 'certificate.jpg';
+                link.click();
+            });
+        });
+        
+    </script>
+</body>
+</html>
